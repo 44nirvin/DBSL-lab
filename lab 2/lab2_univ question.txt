@@ -1,0 +1,198 @@
+9. List all Students with names and their department names.
+
+SQL> select name, dept_name as dept from student;
+
+NAME                 DEPT
+-------------------- --------------------
+Zhang                Comp. Sci.
+Shankar              Comp. Sci.
+Brandt               History
+Chavez               Finance
+Peltier              Physics
+Levy                 Physics
+Williams             Comp. Sci.
+Sanchez              Music
+Snow                 Physics
+Brown                Comp. Sci.
+Aoi                  Elec. Eng.
+
+NAME                 DEPT
+-------------------- --------------------
+Bourikas             Elec. Eng.
+Tanaka               Biology
+
+13 rows selected.
+
+
+
+
+
+10. List all instructors in CSE department. 
+
+SQL> select * from instructor
+  2  where dept_name='Comp. Sci.';
+
+ID    NAME                 DEPT_NAME                SALARY
+----- -------------------- -------------------- ----------
+10101 Srinivasan           Comp. Sci.                65000
+45565 Katz                 Comp. Sci.                75000
+83821 Brandt               Comp. Sci.                92000
+
+SQL>
+
+
+
+
+
+
+11. Find the names of courses in CSE department which have 3 credits.
+
+SQL> select title from course
+where credits=3;
+
+TITLE
+--------------------------------------------------
+Computational Biology
+Robotics
+Image Processing
+Database System Concepts
+Intro. to Digital Systems
+Investment Banking
+World History
+Music Video Production
+
+8 rows selected.
+
+
+
+
+
+
+12. For the student with ID 12345 (or any other value), show all course-id and title of all 
+courses registered for by the student. 
+
+
+SQL> select c.course_id, c.title from course c join takes t
+on c.course_id=t.course_id
+where t.id=12345;
+
+COURSE_I TITLE
+-------- --------------------------------------------------
+CS-101   Intro. to Computer Science
+CS-190   Game Design
+CS-315   Robotics
+CS-347   Database System Concepts
+
+SQL>
+
+
+
+
+13. List all the instructors whose salary is in between 40000 and 90000. 
+
+
+
+SQL> select * from instructor
+where salary>40000 and salary<90000;
+
+ID    NAME                 DEPT_NAME                SALARY
+----- -------------------- -------------------- ----------
+10101 Srinivasan           Comp. Sci.                65000
+32343 El Said              History                   60000
+33456 Gold                 Physics                   87000
+45565 Katz                 Comp. Sci.                75000
+58583 Califieri            History                   62000
+76543 Singh                Finance                   80000
+76766 Crick                Biology                   72000
+98345 Kim                  Elec. Eng.                80000
+
+
+
+
+
+14. Display the IDs of all instructors who have never taught a course.
+
+
+SQL> select * from instructor
+where id NOT IN (select id from teaches);
+
+ID    NAME                 DEPT_NAME                SALARY
+----- -------------------- -------------------- ----------
+33456 Gold                 Physics                   87000
+58583 Califieri            History                   62000
+76543 Singh                Finance                   80000
+
+
+15. Find the student names, course names, and the year, for all students those who have 
+attended classes in room-number 303. 
+
+
+
+SQL> select s.name, c.title, t.year from student s
+ join takes t on s.id=t.id
+ join section sec on t.course_id=sec.course_id
+ and t.sec_id=sec.sec_id
+ and t.semester=sec.semester
+ and t.year=sec.year
+ join course c on t.course_id=c.course_id
+ where sec.room_number=303;
+
+no rows selected
+
+16. For all students who have opted courses in 2015, find their names and course id’s 
+with the attribute course title replaced by c-name. 
+
+
+SQL> select s.name, t.course_id, c.title as c_name
+ from student s
+ join takes t
+ on s.id=t.id
+ join course c on t.course_id=c.course_id
+ where year=2010;
+
+
+17. Find the names of all instructors whose salary is greater than the salary of at least 
+one instructor of CSE department and salary replaced by inst-salary. 
+
+
+SQL> select name, salary as inst_salary from instructor
+where salary >
+(select min(salary) from instructor
+where dept_name='Comp. Sci.');
+
+
+18. Find the names of all instructors whose department name includes the substring 
+‘ch’.       
+
+SQL> select name from instructor
+where dept_name like '%ch%';
+
+19. List the student names along with the length of the student names. 
+
+SQL> select name, length(name) as name_length from student;
+
+
+
+20. List the department names and 3 characters from 3rd position of each department name 
+
+SQL> select dept_name, SUBSTR(dept_name, 3, 3) as thirdpos from department;
+
+
+
+21. List the instructor names in upper case. 
+
+SQL> select UPPER(name) as name from instructor;
+
+
+
+22. Replace NULL with value1(say 0) for a column in any of the table    
+
+SQL> select name, NVL(tot_cred, 0) as credits
+from student;
+
+
+
+23. Display the salary and salary/3 rounded to nearest hundred from Instructor.
+
+SQL> select name, salary, ROUND(salary/3,-2) as salby3
+from instructor;

@@ -1,0 +1,194 @@
+SQL> create table employee(empno number(5) PRIMARY KEY,
+ empname varchar(20) NOT NULL,
+ gender char(1) NOT NULL CHECK (gender IN ('M', 'F')),
+ salary number(10) NOT NULL,
+ address varchar(5) NOT NULL,
+ DNo number(1));
+
+Table created.
+
+SQL> desc employee
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(5)
+ EMPNAME                                   NOT NULL VARCHAR2(20)
+ GENDER                                    NOT NULL CHAR(1)
+ SALARY                                    NOT NULL NUMBER(10)
+ ADDRESS                                   NOT NULL VARCHAR2(50)
+ DNO                                                NUMBER(1)
+
+
+
+(
+
+
+SQL> create table department (DeptNo number(1) PRIMARY KEY,
+ DeptName varchar(20) NOT NULL UNIQUE,
+ Location varchar(20));
+
+Table created.
+
+SQL> desc department;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNO                                    NOT NULL NUMBER(1)
+ DEPTNAME                                  NOT NULL VARCHAR2(20)
+ LOCATION                                           VARCHAR2(20)
+
+SQL>
+
+
+
+
+
+
+
+
+SQL> alter table employee add constraint abc_dno
+  2  foreign key (DNo) references department(DeptNo);
+
+Table altered.
+
+
+
+
+
+
+
+
+
+SQL> INSERT INTO Department (DeptNo, DeptName, Location) VALUES (1, 'Sales', 'wing A');
+
+1 row created.
+
+SQL> INSERT INTO Department (DeptNo, DeptName, Location) VALUES (2, 'IT', 'wing C');
+
+1 row created.
+
+SQL> insert into employee values( 00001, 'abc', 'M', 100000, 'Mumbai', 1);
+
+1 row created.
+
+SQL> insert into employee values(00002, 'xyz', 'F', 75000, 'Pune', 2);
+
+1 row created.
+
+
+
+
+
+
+
+
+
+constraint violation: 
+
+1. gender
+SQL> insert into employee values(00003, 'pqr', 'x', 676767, 'smth', 1);
+insert into employee values(00003, 'pqr', 'x', 676767, 'smth', 1)
+*
+ERROR at line 1:
+ORA-02290: check constraint (CSE32.SYS_C00247923) violated
+
+2. empname being unique
+SQL> insert into employee values(00002, 'pqr', 'M', 676767, 'smth', 1);
+insert into employee values(00002, 'pqr', 'M', 676767, 'smth', 1)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CSE32.SYS_C00247924) violated
+
+3. unique deptno and deptname
+SQL> INSERT INTO Department (DeptNo, DeptName, Location) VALUES (1, 'lmn', 'wing A');
+INSERT INTO Department (DeptNo, DeptName, Location) VALUES (1, 'lmn', 'wing A')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CSE32.SYS_C00248024) violated
+
+SQL>  INSERT INTO Department (DeptNo, DeptName, Location) VALUES (3,'Sales', 'wing A');
+ INSERT INTO Department (DeptNo, DeptName, Location) VALUES (3,'Sales', 'wing A')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (CSE32.SYS_C00248025) violated
+
+
+
+
+
+
+
+SQL> delete from department where DeptNo=2;
+delete from department where DeptNo=2
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (CSE32.ABC_DNO) violated - child record found
+
+
+
+
+
+
+
+
+SQL> alter table employee drop constraint abc_dno;
+
+SQL> alter table employee
+add constraint dept_cascade
+foreign key(DNo)
+references department(DeptNo)
+on delete cascade;
+
+Table altered.
+
+SQL> delete from department
+  2  where deptno=2;
+
+1 row deleted.
+
+SQL> select * from employee;
+
+no rows selected
+
+SQL> select * from department;
+
+    DEPTNO DEPTNAME             LOCATION
+---------- -------------------- --------------------
+         1 Sales                wing A
+
+
+
+
+
+
+
+SQL> ALTER TABLE Employee
+ADD CONSTRAINT ck_min_salary CHECK (Salary >= 10000);
+
+Table altered.
+
+
+
+
+
+24. Display the birth date of all the employees in the following format: 
+ ‘DD-MON-YYYY’ 
+ ‘DD-MON-YY’ 
+ ‘DD-MM-YY’ 
+
+SQL> select empname, TO_DATE(DOB, 'DD-MON-YYYY') from employee;
+
+
+SQL> select empname, TO_CHAR(DOB, 'DD-MON-YY') from employee;
+
+
+SQL> select empname, TO_CHAR(DOB, 'DD-MM-YY') from employee;
+
+
+
+25. List the employee names and the year (fully spelled out) in which they are born 
+ ‘YEAR’ 
+ ‘Year’ 
+ ‘year’ 
+
+SQL> select empname, TO_CHAR(DOB, 'YEAR') as allcaps, 
+TO_CHAR(DOB, 'Year') as cap, 
+TO_CHAR(DOB, 'year') as smol from employee;
