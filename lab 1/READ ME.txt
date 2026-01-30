@@ -1,0 +1,17 @@
+**READ ME**
+
+**make script for every query used, since sql doesn't save the queries**
+
+
+type '@' and drag+ drop txt file with queries onto the terminal, then enter the path file (with ;) 
+this runs those queries
+
+Using '&' to enter values in the sql terminal
+
+deletion of a row can be undone using 'rollback'
+
+checkpoints can be made using "savepoint <name>"
+
+dropping a table cannot be rolled back
+
+set linesize to a bigger one ( quality of life type shit)
