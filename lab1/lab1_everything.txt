@@ -1,0 +1,643 @@
+
+SQL*Plus: Release 12.1.0.2.0 Production on Fri Jan 9 04:00:43 2026
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+Enter user-name: cse32@cseorcl
+Enter password:
+Last Successful login time: Fri Jan 09 2026 08:47:51 +05:30
+
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+
+SQL> select * from student
+  2  ;
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS
+---------- -------------------- ---------- --------- --------------
+SUBJECT2_MARKS SUBJECT3_MARKS
+-------------- --------------
+       102 jenniffer                    17 25-DEC-87             75
+            50            100
+
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS
+---------- -------------------- ---------- --------- --------------
+SUBJECT2_MARKS SUBJECT3_MARKS
+-------------- --------------
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS
+---------- -------------------- ---------- --------- --------------
+SUBJECT2_MARKS SUBJECT3_MARKS
+-------------- --------------
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS
+---------- -------------------- ---------- --------- --------------
+SUBJECT2_MARKS SUBJECT3_MARKS
+-------------- --------------
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS
+---------- -------------------- ---------- --------- --------------
+SUBJECT2_MARKS SUBJECT3_MARKS
+-------------- --------------
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+       103 john doe                     16                       60
+            90             91
+
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS
+---------- -------------------- ---------- --------- --------------
+SUBJECT2_MARKS SUBJECT3_MARKS
+-------------- --------------
+       102 jenniffer                    17 25-DEC-87             75
+            50            100
+
+       103 john doe                     16                       60
+            90             91
+
+
+17 rows selected.
+
+SQL> set linesize 500;
+SQL> select * from student
+  2  ;
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS SUBJECT2_MARKS SUBJECT3_MARKS
+---------- -------------------- ---------- --------- -------------- -------------- --------------
+       102 jenniffer                    17 25-DEC-87             75  50            100
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS SUBJECT2_MARKS SUBJECT3_MARKS
+---------- -------------------- ---------- --------- -------------- -------------- --------------
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       103 john doe                     16                       60  90             91
+       102 jenniffer                    17 25-DEC-87             75  50            100
+       103 john doe                     16                       60  90             91
+
+17 rows selected.
+
+SQL> delete from student where reg_no<104;
+
+17 rows deleted.
+
+SQL> @C:\Users\Student\Desktop\240905318\lab1\lab1.txt
+create table STUDENT (
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+
+1 row created.
+
+
+1 row created.
+
+Enter value for number: 104
+Enter value for name: jane doe
+Enter value for age: 16
+Enter value for date: '27-oct-88'
+Enter value for sub1: 45
+Enter value for sub2: 90
+Enter value for sub3: 91
+old   1: insert into STUDENT values(&number, '&name', &age, '&date', &sub1, &sub2, &sub3)
+new   1: insert into STUDENT values(104, 'jane doe', 16, ''27-oct-88'', 45, 90, 91)
+insert into STUDENT values(104, 'jane doe', 16, ''27-oct-88'', 45, 90, 91)
+                                                  *
+ERROR at line 1:
+ORA-00917: missing comma
+
+
+SQL> alter table STUDENT add (GENDER char(1) default 'M');
+
+Table altered.
+
+SQL> select * from STUDENT;
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS SUBJECT2_MARKS SUBJECT3_MARKS G
+---------- -------------------- ---------- --------- -------------- -------------- -------------- -
+       102 jenniffer                    17 25-DEC-87             75  50            100 M
+       103 john doe                     16                       60  90             91 M
+
+SQL> insert into STUDENT values(&number, '&name', &age, '&date', &sub1, &sub2, &sub3);
+Enter value for number: 104
+Enter value for name: jane doe
+Enter value for age: 16
+Enter value for date: 27-oct-88
+Enter value for sub1: 54
+Enter value for sub2: 90
+Enter value for sub3: 100
+old   1: insert into STUDENT values(&number, '&name', &age, '&date', &sub1, &sub2, &sub3)
+new   1: insert into STUDENT values(104, 'jane doe', 16, '27-oct-88', 54, 90,100)
+insert into STUDENT values(104, 'jane doe', 16, '27-oct-88', 54, 90, 100)
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+SQL> select * from STUDENT where stu_dob is null;
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS SUBJECT2_MARKS SUBJECT3_MARKS G
+---------- -------------------- ---------- --------- -------------- -------------- -------------- -
+       103 john doe                     16                       60  90             91 M
+
+SQL> insert into STUDENT values(&number, '&name', &age, '&date', &sub1, &sub2, &sub3,'&gender');
+Enter value for number: 104
+Enter value for name: jane doe
+Enter value for age: 16
+Enter value for date: 27-oct-88
+Enter value for sub1: 54
+Enter value for sub2: 90
+Enter value for sub3: 100
+Enter value for gender: F
+old   1: insert into STUDENT values(&number, '&name', &age, '&date', &sub1, &sub2, &sub3,'&gender')
+new   1: insert into STUDENT values(104, 'jane doe', 16, '27-oct-88', 54, 90,100,'F')
+
+1 row created.
+
+SQL> update STUDENT set stu_dob='30-sep-88' where reg_no=103;
+
+1 row updated.
+
+SQL> select * from STUDENT;
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS SUBJECT2_MARKS SUBJECT3_MARKS G
+---------- -------------------- ---------- --------- -------------- -------------- -------------- -
+       102 jenniffer                    17 25-DEC-87             75  50            100 M
+       103 john doe                     16 30-SEP-88             60  90             91 M
+       104 jane doe                     16 27-OCT-88             54  90            100 F
+
+SQL> update STUDENT set gender='F' where reg_no=102;
+
+1 row updated.
+
+SQL> select * from STUDENT;
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS SUBJECT2_MARKS SUBJECT3_MARKS G
+---------- -------------------- ---------- --------- -------------- -------------- -------------- -
+       102 jenniffer                    17 25-DEC-87             75  50            100 F
+       103 john doe                     16 30-SEP-88             60  90             91 M
+       104 jane doe                     16 27-OCT-88             54  90            100 F
+
+SQL> delete from student;
+
+3 rows deleted.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from STUDENT;
+
+    REG_NO STU_NAME                STU_AGE STU_DOB   SUBJECT1_MARKS SUBJECT2_MARKS SUBJECT3_MARKS G
+---------- -------------------- ---------- --------- -------------- -------------- -------------- -
+       102 jenniffer                    17 25-DEC-87             75  50            100 M
+       103 john doe                     16                       60  90             91 M
+
+SQL> savepoint SAVE1
+  2  ;
+
+Savepoint created.
+
+SQL> delete from student;
+
+2 rows deleted.
+
+SQL> rollback SAVE1
+  2  ;
+rollback SAVE1
+         *
+ERROR at line 1:
+ORA-02181: invalid option to ROLLBACK WORK
+
+
+SQL> rollback SAVE1;
+rollback SAVE1
+         *
+ERROR at line 1:
+ORA-02181: invalid option to ROLLBACK WORK
+
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> select * from student;
+select * from student
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from student;
+select * from student
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table employee (emp_no number(5),emp_name varchar(20),emp_addressvarchar(20));
+
+Table created.
+
+SQL> insert into employee values (10000,'A','Brighton');
+
+1 row created.
+
+SQL> insert into employee values (10001,'B','Manipal');
+
+1 row created.
+
+SQL> insert into employee values (10002,'C','Manipal');
+
+1 row created.
+
+SQL> insert into employee values (10003,'D','Mangalore');
+
+1 row created.
+
+SQL> insert into employee values (10004,'E','Worchestershire');
+
+1 row created.
+
+SQL> select emp_name name from employee;
+
+NAME
+--------------------
+A
+B
+C
+D
+E
+
+SQL> select emp_name, emp_address from employee where EMP_Address='Manipal';
+
+EMP_NAME             EMP_ADDRESS
+-------------------- --------------------
+B                    Manipal
+C                    Manipal
+
+SQL> Alter table employee add(Salary number(6) default 0);
+
+Table altered.
+
+SQL> update employee set salary=800000 where salary=0;
+
+5 rows updated.
+
+SQL> desc employee;
+ Name                                                Null?     Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ EMP_NO                                         NUMBER(5)
+ EMP_NAME                                         VARCHAR2(20)
+ EMP_ADDRESS                                         VARCHAR2(20)
+ SALARY                                         NUMBER(6)
+
+SQL> delete from employee where EMP_ADDRESS = 'Mangalore';
+
+1 row deleted.
+
+SQL> rename employee to employee1;
+
+Table renamed.
+
+SQL> drop table employee1;
+
+Table dropped.
+
+SQL> select * from tab;
+
+TNAMETABTYPE  CLUSTERID
+-------------------------------------------------------------------------------------------------------------------------------- ------- ----------
+BIN$wi8K48p3Qa6B93CyTz6Isg==$0TABLE
+BIN$i46XjMaQRFaCdVBFamwJew==$0TABLE
+BIN$YIz9ahssQi6quofdKU+kRg==$0TABLE
+BIN$AekgU4tOSyqpHcZeY70BlA==$0TABLE
+BIN$3T3RcKe3QAGMxV5KsUniSw==$0TABLE
+
+SQL> @C:\Users\Student\Desktop\lab1.txt
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+NAME
+--------------------
+A
+B
+C
+D
+E
+
+
+EMP_NAME             EMP_ADDRESS
+-------------------- --------------------
+B                    Manipal
+C                    Manipal
+
+
+Table altered.
+
+
+5 rows updated.
+
+ Name      Null?     Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ EMP_NO                                                                      NUMBER(5)
+ EMP_NAME                                                                    VARCHAR2(20)
+ EMP_ADDRESS                                                                 VARCHAR2(20)
+ SALARY                                                                      NUMBER(6)
+
+
+0 rows deleted.
+
+
+Table renamed.
+
+
+Table dropped.
+
+SQL> @C:\Users\Student\Desktop\lab1.txt
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+NAME
+--------------------
+A
+B
+C
+D
+E
+
+
+EMP_NAME             EMP_ADDRESS
+-------------------- --------------------
+B                    Manipal
+C                    Manipal
+
+
+Table altered.
+
+
+0 rows updated.
+
+ Name      Null?     Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ EMP_NO                                                                      NUMBER(5)
+ EMP_NAME                                                                    VARCHAR2(20)
+ EMP_ADDRESS                                                                 VARCHAR2(20)
+ SALARY                                                                      NUMBER(6)
+
+
+1 row deleted.
+
+
+Table renamed.
+
+SQL> select * from employee1
+  2  ;
+
+    EMP_NO EMP_NAME             EMP_ADDRESS              SALARY
+---------- -------------------- -------------------- ----------
+     10000 A                    Brighton                      0
+     10001 B                    Manipal                       0
+     10002 C                    Manipal                       0
+     10004 E                    Worchestershire               0
+
+SQL> @C:\Users\Student\Desktop\lab1.txt
+
+Table created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+1 row created.
+
+
+NAME
+--------------------
+A
+B
+C
+D
+E
+
+
+EMP_NAME             EMP_ADDRESS
+-------------------- --------------------
+B                    Manipal
+C                    Manipal
+
+
+Table altered.
+
+
+5 rows updated.
+
+ Name      Null?     Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ EMP_NO                                                                      NUMBER(5)
+ EMP_NAME                                                                    VARCHAR2(20)
+ EMP_ADDRESS                                                                 VARCHAR2(20)
+ SALARY                                                                      NUMBER(6)
+
+
+1 row deleted.
+
+rename employee to employee1
+                   *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> drop table employee1
+  2  ;
+
+Table dropped.
+
+SQL> @C:\Users\Student\Desktop\lab1.txt
+create table employee (emp_no number(5),emp_name varchar(20),emp_address varchar(20))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+insert into employee values (10000,'A','Brighton')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+insert into employee values (10001,'B','Manipal')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+insert into employee values (10002,'C','Manipal')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+insert into employee values (10003,'D','Mangalore')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+insert into employee values (10004,'E','Worchestershire')
+            *
+ERROR at line 1:
+ORA-00947: not enough values
+
+
+
+NAME
+--------------------
+A
+B
+C
+E
+
+
+EMP_NAME             EMP_ADDRESS
+-------------------- --------------------
+B                    Manipal
+C                    Manipal
+
+Alter table employee add(Salary number(6) default 0)
+                         *
+ERROR at line 1:
+ORA-01430: column being added already exists in table
+
+
+
+0 rows updated.
+
+ Name      Null?     Type
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ EMP_NO                                                                      NUMBER(5)
+ EMP_NAME                                                                    VARCHAR2(20)
+ EMP_ADDRESS                                                                 VARCHAR2(20)
+ SALARY                                                                      NUMBER(6)
+
+
+0 rows deleted.
+
+
+Table renamed.
+
+SQL> select * from employee1
+  2  ;
+
+    EMP_NO EMP_NAME             EMP_ADDRESS              SALARY
+---------- -------------------- -------------------- ----------
+     10000 A                    Brighton                 800000
+     10001 B                    Manipal                  800000
+     10002 C                    Manipal                  800000
+     10004 E                    Worchestershire          800000
+
+SQL> drop table employee1;
+
+Table dropped.
+
+SQL>
